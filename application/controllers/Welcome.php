@@ -20,6 +20,9 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
+		$this->load->library("Aauth");
+		$this->aauth->create_user('frodo@example.com','frodopass','FrodoBaggins');
+		$this->aauth->create_user('legolas@example.com','legolaspass','Legolas');
 		$this->load->view('welcome_message');
 	}
 }

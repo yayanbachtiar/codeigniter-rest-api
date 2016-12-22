@@ -8,6 +8,6 @@ class Meja extends REST_Controller {
     }
 
     public function index_get() {
-        echo 'gembus';
+        $this->response('gembus');
     }
 }

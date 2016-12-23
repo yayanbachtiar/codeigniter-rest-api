@@ -63,7 +63,7 @@ class Menu extends REST_Controller
         else
         {
             $message = ['message'=> validation_errors(), 'code'=> false];
-			$this->set_response($message, REST_Controller::HTTP_CREATED);
+			$this->set_response($message, REST_Controller::HTTP_NOT_FOUND);
         }
     }  
 
@@ -100,12 +100,12 @@ class Menu extends REST_Controller
             else
             {   
                 $message = ['message'=> validation_errors(), 'code'=> false];
-			    $this->set_response($message, REST_Controller::HTTP_CREATED);
+			    $this->set_response($message, REST_Controller::HTTP_NOT_FOUND);
             }
         }
         else
             $message = ['message'=> 'invalid ID', 'code'=> false];
-            $this->set_response($message, REST_Controller::HTTP_CREATED);
+            $this->set_response($message, REST_Controller::HTTP_NOT_FOUND);
     } 
 
     /*

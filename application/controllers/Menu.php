@@ -25,7 +25,7 @@ class Menu extends REST_Controller
 
     function makanan_get()
     {
-        $data = $this->Menu_model->get_menu_by_parent_id(1);
+        $data = $this->Menu_model->get_menu_by_parent_id(2);
 		$this->response($data, REST_Controller::HTTP_OK);
     }
 

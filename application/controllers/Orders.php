@@ -28,13 +28,12 @@ class Orders extends REST_Controller
      */
     function index_post()
     {   
-        $this->load->library('form_validation');
-        $data = $this->request->body;
-        if($data['pemesan']){
+        // $this->load->library('form_validation');
+        $data = $this->input->post();
+        if(!$data['pemesan']){
             $data['pemesan'] = '';
         }
         $count_order = $this->Order_model->get_count_order_today();
-        echo $this->db->last_query();
         $params = array(
             'nomor_order' => date('d/m/Y').'-ORD-'.($count_order['jumlah']+1),
             'tanggal' => date('Y-m-d H:i:s'),
@@ -43,8 +42,9 @@ class Orders extends REST_Controller
             'pemesan'=> $data['pemesan']
         );
         
-        $this->Order_model->add_order($params);
-        $message = ['message'=> "created", "code"=> true];            
+        $data = $this->Order_model->add_order($params);
+        $data = $this->Order_model->get_order_by_id($data);
+        $message = ["result"=> $data, 'message'=> "created", "code"=> true];            
         $this->set_response($message, REST_Controller::HTTP_CREATED);
     }
 

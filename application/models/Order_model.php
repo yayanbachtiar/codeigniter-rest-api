@@ -20,9 +20,18 @@ class Order_model extends CI_Model
         $this->db->from('orders');
         $this->db->where(['orders.id'=> $id, 'order_detail.is_deleted'=> false]);
         $this->db->group_by('order_detail.menu_id');
-        $this->db->join('order_detail', 'order_detail.id_order = orders.id', 'inner');
-        $this->db->join('menu', 'menu.id = order_detail.menu_id', 'inner');
+        $this->db->join('order_detail', 'order_detail.id_order = orders.id', 'right');
+        $this->db->join('menu', 'menu.id = order_detail.menu_id', 'right');
         $query = $this->db->get()->result_array();
+        return $query;
+    }
+
+    function get_order_by_id($id)
+    {
+        $this->db->select('*');
+        $this->db->from('orders');
+        $this->db->where(['orders.id'=> $id]);
+        $query = $this->db->get()->row();
         return $query;
     }
     

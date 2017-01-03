@@ -25,7 +25,19 @@ class Menu extends REST_Controller
 
     function makanan_get()
     {
-        $data = $this->Menu_model->get_menu_by_parent_id(2);
+        $paket = $this->Menu_model->get_menu_by_parent_id(1);
+        $ingkung_areh = $this->Menu_model->get_menu_by_parent_id(2);
+        $kudapan = $this->Menu_model->get_menu_by_parent_id(3);
+        $ingkung_goreng = $this->Menu_model->get_menu_by_parent_id(20);
+        $camilan = $this->Menu_model->get_menu_by_parent_id(4);
+        $minuman = $this->Menu_model->get_menu_by_parent_id(5);
+        $data = [
+            "paket" => $paket,
+            "ingkung_areh" => $ingkung_areh,
+            "ingkung_goreng" => $ingkung_goreng,
+            "camilan" => $camilan,
+            "kudapan" => $kudapan, 
+            "minuman" => $minuman];
 		$this->response($data, REST_Controller::HTTP_OK);
     }
 

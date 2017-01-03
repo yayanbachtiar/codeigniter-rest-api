@@ -21,7 +21,7 @@ class Menu_model extends CI_Model
 
     function get_menu_by_parent_id($id)
     {
-        return $this->db->get_where('menu',array('parent_id'=>$id))->result_array();
+        return $this->db->order_by('urutan', 'ASC ')->get_where('menu',array('parent_id'=>$id))->result_array();
     }
     
     /*

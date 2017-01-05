@@ -28,7 +28,7 @@ class Order_detail extends REST_Controller
      */
     function index_post()
     {   
-        $data = $this->request->body;
+        $data = $this->input->post();
         $insert = $this->Order_detail_model->bulk_insert($data);
         if($insert) {
             $message = ['message'=> "created", "code"=> true];            

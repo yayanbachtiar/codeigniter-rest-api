@@ -42,14 +42,14 @@ class Order_detail extends REST_Controller
     /*
      * Editing a order_detail
      */
-    function index_put($id)
+    function update_post($id)
     {   
         // check if the order_detail exists before trying to edit it
         $order_detail = $this->Order_detail_model->get_order_detail($id);
         
         if(isset($order_detail['id']))
         {
-            $data = $this->request->body;
+            $data = $this->input->post();
 
             $this->Order_detail_model->update_order_detail($id,$data);            
             $message = ['message'=> "updated", "code"=> true];            

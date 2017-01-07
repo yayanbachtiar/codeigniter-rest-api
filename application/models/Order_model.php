@@ -20,7 +20,7 @@ class Order_model extends CI_Model
         $this->db->from('orders');
         $this->db->where(['orders.id'=> $id, 'order_detail.is_deleted'=> false]);
         $this->db->group_by('order_detail.menu_id');
-        $this->db->join('order_detail', 'order_detail.id_order = orders.id', 'right');
+        $this->db->join('order_detail', 'order_detail.order_id = orders.id', 'right');
         $this->db->join('menu', 'menu.id = order_detail.menu_id', 'right');
         $query = $this->db->get()->result_array();
         return $query;
@@ -28,11 +28,13 @@ class Order_model extends CI_Model
 
     function get_order_by_id($id)
     {
-        $this->db->select('*');
-        $this->db->from('orders');
-        $this->db->where(['orders.id'=> $id]);
-        $query = $this->db->get()->row();
-        return $query;
+        return $this->db
+        ->select(['orders.id', 'orders.pemesan', 'nomor_order', 'SUM(price * jumlah) as total', 'meja.nomor', 'meja.Posisi'])
+        ->join('order_detail', 'orders.id = order_detail.order_id')
+        ->join('meja', 'orders.meja = meja.id')
+        ->where(['orders.id'=> $id])
+        ->get('orders')->row();
+        // return $query;
     }
     
     /*
@@ -41,6 +43,20 @@ class Order_model extends CI_Model
     function get_all_orders()
     {
         return $this->db->get('orders')->result_array();
+    }
+
+    function get_today_order()
+    {
+        return $this->db
+        ->select(['orders.id', 'orders.pemesan', 'nomor_order', 'SUM(price * jumlah) as total', 'meja.nomor', 'meja.Posisi'])
+        ->join('order_detail', 'orders.id = order_detail.order_id')
+        ->join('meja', 'orders.meja = meja.id')
+        ->where('DATE(tanggal) = CURRENT_DATE()', null)
+        ->where('is_pay', 0)
+        ->group_by('orders.id')
+        ->get('orders')->result_array();
+        
+
     }
     
     /*

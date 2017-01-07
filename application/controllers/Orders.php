@@ -23,6 +23,13 @@ class Orders extends REST_Controller
 		$this->response($data, REST_Controller::HTTP_OK);
     }
 
+    function today_get()
+    {
+        $data =$this->Order_model->get_today_order();
+        // echo $this->db->last_query();
+        $this->response($data, REST_Controller::HTTP_OK);
+    }
+
     /*
      * Adding a new order
      */
@@ -49,7 +56,12 @@ class Orders extends REST_Controller
     }
 
     public function view_get($order_id) {
-        $data = $this->Order_model->get_order($order_id);
+        $order = $this->Order_model->get_order_by_id($order_id);
+        $detail_order = $this->Order_model->get_order($order_id);
+        $data = [
+            "order"=>$order,
+            "detail"=> $detail_order
+        ];
 		$this->response($data, REST_Controller::HTTP_OK);
     }
 
@@ -58,6 +70,13 @@ class Orders extends REST_Controller
         $data = ['is_pay'=> true];
         $message =  $this->Order_model->update_order($id, $data);
 		$this->response($message, REST_Controller::HTTP_OK);
+    }
+
+    public function savepemesan_post($id)
+    {
+        $data = $this->input->post();
+        $message = $this->Order_model->update_order($id, $data);
+        $this->response($message, REST_Controller::HTTP_OK);
     }
 
     // /*

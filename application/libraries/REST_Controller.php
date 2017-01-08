@@ -592,10 +592,10 @@ abstract class REST_Controller extends CI_Controller {
         $this->_end_rtime = microtime(TRUE);
 
         // Log the loading time to the log table
-        // if ($this->config->item('rest_enable_logging') === TRUE)
-        // {
-            // $this->_log_access_time();
-        // }
+        if ($this->config->item('rest_enable_logging') === TRUE)
+        {
+            $this->_log_access_time();
+        }
     }
 
     /**
